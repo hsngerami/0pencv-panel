@@ -55,7 +55,7 @@ class Command(BaseCommand):
             email_subject,
             "sdfsdfsdf",
             settings.DEFAULT_FROM_EMAIL,
-            ['hsn.gerami@gmail.com'],
+            ['xxxxx@gmail.com'],
         )
         email_message.attach_file(image_link)
         email_message.send(fail_silently=False)

@@ -1,0 +1,172 @@
+{% load static %}
+<!doctype html>
+<head>
+    <title>Example</title>
+    <meta charset="UTF-8"/>
+    <meta
+            name="viewport"
+            content="width=device.width,
+        initial-scale=1.0"
+    />
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+button {
+  background-color: purple;
+  position: fixed;
+  color: white;
+  padding: 1rem;
+  outline: none;
+
+}
+
+button.active {
+
+}
+
+nav {
+  background-color: purple;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  padding: 2rem;
+  transform: translate(0%);
+  transition: transform 0.3s ease-in-out;
+}
+
+nav.active {
+  transform: translate(70%);
+}
+
+nav ul {
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
+}
+
+nav ul li {
+  padding: 1rem 0;
+  padding-left: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  align-items: center;
+  }
+.grid > article {
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+}
+.grid > article img {
+  max-width: 100%;
+}
+.text {
+  padding: 0 20px 20px;
+}
+.text > button {
+  background: gray;
+  border: 0;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  }
+    </style>
+</head>
+
+
+<body>
+
+<main class="grid">
+    {% for movement in movements %}
+        <article>
+            <img src={{ movement.img.url }} alt="Sample photo">
+            <div class="text">
+                <h3>{{ movement.datetime }}</h3>
+            </div>
+        </article>
+    {% endfor %}
+</main>
+<nav id="nav">
+    <form method="POST">
+        {% csrf_token %}
+        <ul>
+            <li>
+                <h3>Options<h3>
+            </li>
+{#            <li>#}
+{#                <div class="form-check">#}
+{#                    <input class="form-check-input" type="checkbox" name="live_camera" value={{ is_live }} id="defaultCheck1">#}
+{#                    <label class="form-check-label" for="defaultCheck1">#}
+{#                        Live Camera#}
+{#                    </label>#}
+{#                </div>#}
+{#            </li>#}
+            <li>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="camera" {% if is_camera_on %}checked{% endif %} id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Camera
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="send_email" {% if is_send_email %}checked{% endif %} id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Send Email
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="check_minute" {% if is_minute %}checked{% endif %} id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Check every minute
+                    </label>
+                </div>
+            </li>
+            <li>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="with_picture" {% if with_photo %}checked{% endif %} id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Email with picture
+                    </label>
+                </div>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </li>
+        </ul>
+
+    </form>
+</nav>
+</body>
+
+<script>
+    window.setTimeout(function () {
+    location.href = "/";
+}, 5000); // refresh/redirect after 5 seconds.
+</script>
